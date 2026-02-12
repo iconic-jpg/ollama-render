@@ -1,9 +1,10 @@
 FROM ollama/ollama:latest
 
-EXPOSE 11434
+ENV OLLAMA_HOST=0.0.0.0
+ENV OLLAMA_PORT=${PORT}
 
-# Override default entrypoint
-ENTRYPOINT ["/bin/sh", "-c"]
+# Pre-pull model at build time (optional but recommended)
+RUN ollama pull llama3:8b
 
-CMD "ollama serve & sleep 5 && ollama pull llama3:8b && wait"
+CMD ["ollama", "serve"]
 
