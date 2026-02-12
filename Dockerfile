@@ -1,18 +1,15 @@
 FROM ollama/ollama:latest
 
-ENV OLLAMA_HOST=0.0.0.0
-
+# wipe any preloaded models
 RUN rm -rf /root/.ollama/models/*
 
-RUN ollama pull tinyllama
+# start ollama server in background, pull model, stop server
+RUN ollama serve & \
+    sleep 5 && \
+    ollama pull tinyllama && \
+    pkill ollama
 
 EXPOSE 11434
 
-ENTRYPOINT []
-
-CMD sh -c "\
-ollama serve & \
-sleep 6 && \
-ollama pull llama3 && \
-wait"
+CMD ["ollama", "serve"]
 
