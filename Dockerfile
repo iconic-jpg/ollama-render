@@ -4,8 +4,8 @@ FROM ollama/ollama:latest
 RUN rm -rf /root/.ollama/models/*
 
 # Start server, pull tinyllama, stop server
-RUN /bin/sh -c "ollama serve & sleep 6 && ollama pull tinyllama && pkill ollama"
 
+RUN /bin/sh -c "ollama serve & sleep 6 && ollama pull tinyllama:q2 && pkill ollama"
 EXPOSE 11434
 
 # Override default entrypoint
