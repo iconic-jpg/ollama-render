@@ -1,15 +1,16 @@
 FROM ollama/ollama:latest
 
-# wipe any preloaded models
+# Remove any preloaded models
 RUN rm -rf /root/.ollama/models/*
 
-# start ollama server in background, pull model, stop server
-RUN ollama serve & \
-    sleep 5 && \
-    ollama pull tinyllama && \
-    pkill ollama
+# Start server, pull tinyllama, stop server
+RUN /bin/sh -c "ollama serve & sleep 6 && ollama pull tinyllama && pkill ollama"
 
 EXPOSE 11434
 
+# Override default entrypoint
+ENTRYPOINT []
+
+# Start ollama properly
 CMD ["ollama", "serve"]
 
