@@ -6,5 +6,9 @@ EXPOSE 11434
 
 ENTRYPOINT []
 
-CMD ["ollama", "serve"]
+CMD sh -c "\
+ollama serve & \
+sleep 6 && \
+ollama pull llama3 && \
+wait"
 
