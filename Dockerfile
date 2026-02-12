@@ -1,9 +1,6 @@
 FROM ollama/ollama:latest
 
-ENTRYPOINT ["/bin/sh", "-c"]
+ENV OLLAMA_HOST=0.0.0.0
 
-CMD "ollama serve --host 0.0.0.0:$PORT & \
-sleep 5 && \
-ollama pull llama3:8b && \
-wait"
+CMD ["sh", "-c", "ollama serve & sleep 5 && ollama pull llama3:8b && tail -f /dev/null"]
 
